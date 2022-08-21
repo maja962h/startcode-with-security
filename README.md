@@ -13,4 +13,12 @@ for how to use the code for the cars'R' Us project and future projects this seme
 - Rename (REFACTOR) the package name rename_me into something that makes sense
 - If you only need plain users (username=primary key, email and password) use it as is
 - If you need specialised users, extend the `UserWithRoles` class
-- Default login-endpoint is here: /api/auth/login 
+- Default POST login-endpoint is here: **/api/auth/login**
+  
+  Add this JSON with the login request:
+  ```
+  {
+  "username" : "user1",
+  "password" : "test12"
+  }
+  ```
