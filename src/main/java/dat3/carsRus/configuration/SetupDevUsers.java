@@ -1,9 +1,9 @@
 package dat3.carsRus.configuration;
 
+import dat3.carsRus.entity.Car;
 import dat3.carsRus.entity.Member;
+import dat3.carsRus.repository.CarRepository;
 import dat3.carsRus.repository.MemberRepository;
-import dat3.security.entity.Role;
-import dat3.security.entity.UserWithRoles;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
@@ -13,42 +13,43 @@ import dat3.security.repository.UserWithRolesRepository;
 public class SetupDevUsers implements ApplicationRunner {
 
     UserWithRolesRepository userWithRolesRepository;
-
     MemberRepository memberRepository;
-    String passwordUsedByAll;
+    CarRepository carRepository;
 
-    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, MemberRepository memberRepository) {
+    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, MemberRepository memberRepository, CarRepository carRepository) {
         this.userWithRolesRepository = userWithRolesRepository;
         this.memberRepository = memberRepository;
-        passwordUsedByAll = "test12";
+        this.carRepository = carRepository;
     }
 
     @Override
     public void run(ApplicationArguments args) {
-        Member member = new Member("bob", passwordUsedByAll, "abe@hej.com", "String firstName", "String lastName", "String street", "String city", 4563, true, 1);
-        memberRepository.save(member);
         setupUserWithRoleUsers();
     }
 
-    /*****************************************************************************************
-     NEVER  COMMIT/PUSH CODE WITH DEFAULT CREDENTIALS FOR REAL
-     iT'S ONE OF THE TOP SECURITY FLAWS YOU CAN DO
-     *****************************************************************************************/
+
     private void setupUserWithRoleUsers() {
-       /* System.out.println("******************************************************************************");
-        System.out.println("******* NEVER  COMMIT/PUSH CODE WITH DEFAULT CREDENTIALS FOR REAL ************");
-        System.out.println("******* REMOVE THIS BEFORE DEPLOYMENT, AND SETUP DEFAULT USERS DIRECTLY  *****");
-        System.out.println("**** ** ON YOUR REMOTE DATABASE                 ******************************");
-        System.out.println("******************************************************************************");
-        UserWithRoles user1 = new UserWithRoles("user1", passwordUsedByAll, "user1@a.dk");
-        UserWithRoles user2 = new UserWithRoles("user2", passwordUsedByAll, "user2@a.dk");
-        UserWithRoles user3 = new UserWithRoles("user3", passwordUsedByAll, "user3@a.dk");
-        user1.addRole(Role.USER);
-        user1.addRole(Role.ADMIN);
-        user2.addRole(Role.USER);
-        user3.addRole(Role.ADMIN);
-        userWithRolesRepository.save(user1);
-        userWithRolesRepository.save(user2);
-        userWithRolesRepository.save(user3);*/
+        Member member = new Member("Bob", "farlig", "bob@bob.com", "Bob", "Bobsen", "Enghavevej", "København", 2450, true, 3);
+        Member member1 = new Member("Janne", "sikker", "janne@janne.com", "Janne", "Jannesen", "Finsensvej", "Fredesriksberg", 2000, true, 2);
+        memberRepository.save(member);
+        memberRepository.save(member1);
+
+        Car car = Car.builder()
+                .brand("Toyota")
+                .model("Aygo")
+                .pricePrDay(350)
+                .bestDiscount(25.0)
+                .build();
+
+        Car car1 = Car.builder()
+                .brand("Audi")
+                .model("A6")
+                .pricePrDay(600)
+                .bestDiscount(30.5)
+                .build();
+
+        carRepository.save(car);
+        carRepository.save(car1);
     }
+
 }

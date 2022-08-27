@@ -1,8 +1,7 @@
 package dat3.carsRus.entity;
 
 import dat3.security.entity.UserWithRoles;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,21 +9,23 @@ import javax.persistence.Entity;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Member extends UserWithRoles {
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 50)
     private String firstName;
-    @Column(nullable = false, length = 50)
+    @Column(length = 50)
     private String lastName;
-    @Column(nullable = false, length = 150)
+    @Column(length = 150)
     private String street;
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String city;
-    @Column(nullable = false, length = 4)
+    @Column(length = 4)
     private int zip;
-    @Column(nullable = false)
     private boolean approved;
-    @Column(nullable = false, length = 1)
+    @Column(length = 1)
     private int ranking;
 
 
@@ -37,9 +38,6 @@ public class Member extends UserWithRoles {
         this.zip = zip;
         this.approved = approved;
         this.ranking = ranking;
-    }
-
-    public Member() {
     }
 
 

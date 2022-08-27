@@ -31,7 +31,7 @@ class MemberRepositoryTest {
 
     @Test
     public void testFindByEmail(){
-        Member found = memberRepository.getMemberByEmail("janne@janne.com");
+        Member found = memberRepository.findMemberByEmail("janne@janne.com");
 
         assertEquals(memberB, found.getEmail());
         assertEquals(memberA, "bob@bob.com");

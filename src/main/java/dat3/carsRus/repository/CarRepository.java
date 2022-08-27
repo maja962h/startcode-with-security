@@ -1,10 +1,14 @@
 package dat3.carsRus.repository;
 
 import dat3.carsRus.entity.Car;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CarRepository extends CrudRepository<Car, Integer> {
+import java.util.List;
 
-    Car getCarByBrand (String brand);
+public interface CarRepository extends JpaRepository<Car, Integer> {
+
+    List<Car> findCarByBrand(String Brand);
+
+    List<Car> findCarsByPricePrDayBetween(double min, double max);
 
 }
