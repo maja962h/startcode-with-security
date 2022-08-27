@@ -21,7 +21,6 @@ public class SetupDevUsers implements ApplicationRunner {
         this.memberRepository = memberRepository;
         this.carRepository = carRepository;
     }
-
     @Override
     public void run(ApplicationArguments args) {
         setupUserWithRoleUsers();
