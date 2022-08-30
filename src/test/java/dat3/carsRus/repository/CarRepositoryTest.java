@@ -25,7 +25,7 @@ class CarRepositoryTest {
 
     @Test
     void findCarByBrand() {
-       ;
+
     }
 
     @Test
