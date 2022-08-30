@@ -4,40 +4,38 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Car {
+@ToString
+@EqualsAndHashCode  // When performance becomes important, never set like this
 
+@Entity
+public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int carID;
+    int id;
+
+    @Column(length = 50,nullable = false)
     private String brand;
+
+    @Column(length= 50, nullable = false)
     private String model;
-    private double pricePrDay;
-    private double bestDiscount;
+
+    double pricePrDay;
+
+    //Best discount price (percent for pricePrDay) an admin can offer
+    double bestDiscount;
 
     @CreationTimestamp
     LocalDateTime created;
 
     @UpdateTimestamp
     LocalDateTime edited;
-
-    public Car(String brand, String model, double pricePrDay, double bestDiscount) {
-        this.brand = brand;
-        this.model = model;
-        this.pricePrDay = pricePrDay;
-        this.bestDiscount = bestDiscount;
-    }
-
 
 }
