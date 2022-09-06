@@ -6,6 +6,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,13 +15,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @ToString
-@EqualsAndHashCode  // When performance becomes important, never set like this
 
 @Entity
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @Column(length = 50,nullable = false)
     private String brand;
@@ -27,15 +28,22 @@ public class Car {
     @Column(length= 50, nullable = false)
     private String model;
 
-    double pricePrDay;
+    private double pricePrDay;
 
     //Best discount price (percent for pricePrDay) an admin can offer
-    double bestDiscount;
+    private double bestDiscount;
+
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+    private List<Reservation> reservations = new ArrayList<>();
 
     @CreationTimestamp
-    LocalDateTime created;
+    private LocalDateTime created;
 
     @UpdateTimestamp
-    LocalDateTime edited;
+    private LocalDateTime edited;
+
+    public void addReservation(Reservation reservation){
+        reservations.add(reservation);
+    }
 
 }

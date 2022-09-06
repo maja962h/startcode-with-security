@@ -5,10 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface CarRepository extends JpaRepository<Car, Integer> {
+public interface CarRepository extends JpaRepository<Car,Integer> {
 
-    List<Car> findCarByBrand(String Brand);
-
-    List<Car> findCarsByPricePrDayBetween(double min, double max);
-
+    List<Car> findCarByBrand(String brand);
+    List<Car> findCarByPricePrDayBetween(double min, double max);
 }
