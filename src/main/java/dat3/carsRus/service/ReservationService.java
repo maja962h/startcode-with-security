@@ -1,5 +1,6 @@
 package dat3.carsRus.service;
 
+import dat3.carsRus.dto.ReservationResponse;
 import dat3.carsRus.entity.Car;
 import dat3.carsRus.entity.Member;
 import dat3.carsRus.entity.Reservation;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationService {
@@ -26,17 +29,28 @@ public class ReservationService {
     }
 
     public void reserveCar(String memberId, int carId, LocalDate date){
-        boolean exists = reservationRepository.existsByCar_IdAndRentalDate(carId, date);
 
-        if (exists){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "car is already reserved for this date");
+        Member member = memberRepository.findById(memberId).
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found"));
+
+        Car car = carRepository.findById(carId).
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Car not found"));
+
+        if(reservationRepository.existsByCar_IdAndRentalDate(carId, date)){
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Car not available");
         }
 
-        Member member = memberRepository.findById(memberId).orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST, "user not found"));
-        Car car = carRepository.findById(carId).orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST, "car not found"));
+        Reservation reservation = new Reservation(member, car, date);
+        reservationRepository.save(reservation);
 
-        Reservation res = new Reservation(member, car, date);
-        reservationRepository.save(res);
     }
 
+    public List<ReservationResponse> getReservations() {
+        List<Reservation> reservations = reservationRepository.findAll();
+
+        List<ReservationResponse> responses = reservations.stream().map(reservation -> new ReservationResponse(reservation, false)).collect(Collectors.toList());
+
+        return responses;
+
+    }
 }

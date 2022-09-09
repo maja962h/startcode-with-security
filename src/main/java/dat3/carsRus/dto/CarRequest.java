@@ -18,6 +18,13 @@ public class CarRequest {
     double pricePrDay;
     double bestDiscount;
 
+    public CarRequest(Car car){
+        this.brand = car.getBrand();
+        this.model = car.getModel();
+        this.pricePrDay = car.getPricePrDay();
+        this.bestDiscount = car.getBestDiscount();
+    }
+
     public static Car getCarEntity(CarRequest cr){
         return Car.builder()
                 .brand(cr.brand)
@@ -27,12 +34,7 @@ public class CarRequest {
                 .build();
     }
 
-    public CarRequest(Car car){
-        this.brand = car.getBrand();
-        this.model = car.getModel();
-        this.pricePrDay = car.getPricePrDay();
-        this.bestDiscount = car.getBestDiscount();
-    }
+
 
 }
 
